@@ -21,6 +21,7 @@ Always respond in JSON format:
   "risk": "Low/Medium/High",
   "message": "Firm but concise response."
 }
+Do not include any text outside the JSON.
 """
 
 
