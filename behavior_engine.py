@@ -24,6 +24,29 @@ def handle_message(msg):
 
     return "Acknowledged. Maintain discipline."
 
+    # ==========================
+    # 2️⃣ LLM BEHAVIORAL ANALYSIS
+    # ==========================
+
+    context = get_context()
+
+    try:
+        llm_response = call_llm(original_msg, context)
+
+        parsed = json.loads(llm_response)
+        risk = parsed.get("risk", "Unknown")
+        message = parsed.get("message", "Maintain discipline.")
+
+        # Log behavior with risk level
+        log_behavior(original_msg, risk, message)
+
+        return message
+
+    except Exception:
+        # Fallback safety if LLM fails
+        fallback = "Discipline required. Maintain system rules."
+        log_behavior(original_msg, "LLM_ERROR", fallback)
+        return fallback
 
 def decision_time_reached():
     from datetime import datetime
